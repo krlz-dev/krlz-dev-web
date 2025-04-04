@@ -1,0 +1,123 @@
+---
+const experiences = [
+    {
+        title: "Senior Developer",
+        company: "Portavita LLC",
+        location: "Innopolis, Russia - Amsterdam, Netherlands",
+        period: "2018 - 2024",
+        description: "Led software design decisions and implementations within multidisciplinary teams, contributing to digital healthcare projects aimed at enhancing data accessibility and management."
+    },
+    {
+        title: "Research & Technical Writing",
+        company: "Acronis",
+        location: "Innopolis, Russia",
+        period: "2017 - 2018",
+        description: "Conducted research and implemented solutions for real-world projects, notably contributing to \"Application Aware Disaster Recovery,\" which received recognition from senior management."
+    },
+    {
+        title: "System Data Analyst",
+        company: "COFAR Laboratories",
+        location: "La Paz, Bolivia",
+        period: "2016 - 2017",
+        description: "Led initiatives to enhance system modules within a microservices architecture, optimizing data processes for improved efficiency."
+    },
+    {
+        title: "Web Development Instructor",
+        company: "ATENEA",
+        location: "La Paz, Bolivia",
+        period: "2014 - 2016",
+        description: "Designed and delivered comprehensive web development courses, empowering students with practical skills and industry-relevant knowledge."
+    }
+];
+---
+
+<section id="experience" class="py-5" data-aos="fade-up">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2 class="display-4 fw-bold mb-4">Experience</h2>
+                <div class="divider mb-4"></div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="timeline">
+                    {
+                        experiences.map((exp, index) => (
+                            <div class="timeline-item" data-aos="fade-up" data-aos-delay={index * 100}>
+                                <div class="timeline-content p-4 rounded-3">
+                                    <div class="d-flex justify-content-between mb-2">
+                                        <h3 class="h5 mb-0 text-accent">{exp.title}</h3>
+                                        <span class="badge bg-accent text-dark">{exp.period}</span>
+                                    </div>
+                                    <p class="mb-2 text-secondary">
+                                        {exp.company} | {exp.location}
+                                    </p>
+                                    <p class="mb-0">
+                                        {exp.description}
+                                    </p>
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .timeline {
+        position: relative;
+        padding: 0;
+    }
+    
+    .timeline::before {
+        content: '';
+        position: absolute;
+        width: 2px;
+        height: 100%;
+        background: var(--accent);
+        left: 50%;
+        transform: translateX(-50%);
+        opacity: 0.3;
+    }
+    
+    .timeline-item {
+        margin-bottom: 2rem;
+        position: relative;
+    }
+    
+    .timeline-content {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        margin-left: 2rem;
+        position: relative;
+    }
+    
+    .timeline-content::before {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        background: var(--accent);
+        border-radius: 50%;
+        left: -2.5rem;
+        top: 1rem;
+    }
+    
+    .bg-accent {
+        background-color: var(--accent) !important;
+    }
+    
+    .divider {
+        width: 60px;
+        height: 4px;
+        background: var(--accent);
+        margin: 0 auto;
+    }
+    
+    .text-accent {
+        color: var(--accent);
+    }
+</style>
