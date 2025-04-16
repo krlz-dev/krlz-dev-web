@@ -1,0 +1,225 @@
+---
+import mermaid from 'mermaid';
+
+const sections = [
+    {
+        id: "web-design",
+        title: "🌐 Modern Web Design & Frontend Architecture",
+        subsections: [
+            {
+                title: "Design Systems / Component Patterns",
+                content: `Exploring modern design system architectures and component patterns that shape today's web development landscape.
+                Key principles from industry leaders:
+                
+                - **Brad Frost's Atomic Design**: Breaking UI into atomic components
+                - **Nathan Curtis**: Building scalable design systems
+                - **Alla Kholmatova**: Systematic approach to design
+                - **Adam Silver**: Accessibility-first design
+                - **Ethan Marcotte**: Responsive design principles`,
+                diagram: `
+                classDiagram
+                    class Atoms {
+                        +Button
+                        +Input
+                        +Label
+                    }
+                    class Molecules {
+                        +SearchBar
+                        +FormField
+                    }
+                    class Organisms {
+                        +Header
+                        +Footer
+                        +Form
+                    }
+                    class Templates {
+                        +HomePage
+                        +ArticlePage
+                    }
+                    Atoms <|-- Molecules
+                    Molecules <|-- Organisms
+                    Organisms <|-- Templates
+                `
+            }
+        ]
+    },
+    {
+        id: "micro-frontends",
+        title: "🧩 Micro Frontends & Federated Modules",
+        subsections: [
+            {
+                title: "Module Federation Architecture",
+                content: `Understanding the revolutionary approach to frontend architecture through Module Federation:
+                
+                - **Luca Mezzalira's Principles**: Independent deployability
+                - **Zack Jackson's Module Federation**: Runtime dependency sharing
+                - **Cam Jackson's Implementation Patterns**: Real-world scenarios
+                - **Manfred Steyer's Angular Integration**: Framework-specific patterns`,
+                diagram: `
+                sequenceDiagram
+                    participant Shell
+                    participant MF1 as MicroFrontend1
+                    participant MF2 as MicroFrontend2
+                    Shell->>MF1: Load Remote Entry
+                    MF1-->>Shell: Expose Components
+                    Shell->>MF2: Load Remote Entry
+                    MF2-->>Shell: Expose Components
+                    Shell->>Shell: Compose UI
+                `
+            }
+        ]
+    },
+    {
+        id: "microservices",
+        title: "⚙️ Microservices / Macroservices Architecture",
+        subsections: [
+            {
+                title: "Microservices Design Patterns",
+                content: `Deep dive into microservices architecture patterns and best practices:
+                
+                - **Sam Newman's Principles**: Service boundaries and communication
+                - **Chris Richardson's Patterns**: Data management and deployment
+                - **Martin Fowler's DDD**: Domain-driven design in microservices
+                - **Uberto Barbini's Macroservices**: Balanced service granularity`,
+                diagram: `
+                sequenceDiagram
+                    participant API
+                    participant Auth
+                    participant Orders
+                    participant Payment
+                    API->>Auth: Validate Token
+                    Auth-->>API: Token Valid
+                    API->>Orders: Create Order
+                    Orders->>Payment: Process Payment
+                    Payment-->>Orders: Payment Confirmed
+                    Orders-->>API: Order Created
+                `
+            }
+        ]
+    },
+    {
+        id: "resilience",
+        title: "🔁 Resilience, Sagas, and Catastrophe Scenarios",
+        subsections: [
+            {
+                title: "Saga Pattern Implementation",
+                content: `Understanding distributed transactions and failure handling:
+                
+                - **Chris Richardson's Saga Pattern**: Orchestration vs. Choreography
+                - **Bernd Rücker's Process Orchestration**: BPMN implementation
+                - **Clemens Vasters' Messaging Patterns**: Reliable communication
+                - **Udi Dahan's Event-Driven Architecture**: Message-based systems`,
+                diagram: `
+                sequenceDiagram
+                    participant Order
+                    participant Payment
+                    participant Stock
+                    participant Shipping
+                    Order->>Payment: Process Payment
+                    alt Payment Success
+                        Payment-->>Order: Payment Confirmed
+                        Order->>Stock: Reserve Items
+                        alt Stock Available
+                            Stock-->>Order: Items Reserved
+                            Order->>Shipping: Create Shipment
+                            Shipping-->>Order: Shipment Created
+                        else Stock Not Available
+                            Stock-->>Order: Reservation Failed
+                            Order->>Payment: Refund Payment
+                            Payment-->>Order: Payment Refunded
+                        end
+                    else Payment Failed
+                        Payment-->>Order: Payment Failed
+                        Order->>Order: Cancel Order
+                    end
+                `
+            }
+        ]
+    }
+];
+---
+
+<section id="architecture" class="py-5" data-aos="fade-up">
+    <div class="container">
+        <div class="row justify-content-center mb-5">
+            <div class="col-lg-8 text-center">
+                <h2 class="display-4 fw-bold mb-4">Architectures & Design Patterns</h2>
+                <div class="divider mb-4"></div>
+                <p class="lead text-secondary mb-5">
+                    Deep analysis of modern software architecture patterns and design principles
+                </p>
+            </div>
+        </div>
+
+        {sections.map((section) => (
+            <div class="architecture-section mb-5" id={section.id}>
+                <h3 class="h2 mb-4">{section.title}</h3>
+                
+                {section.subsections.map((subsection) => (
+                    <div class="subsection bg-dark-subtle p-4 rounded-3 mb-4" data-aos="fade-up">
+                        <h4 class="h4 mb-3">{subsection.title}</h4>
+                        <div class="content mb-4" set:html={subsection.content}></div>
+                        <div class="diagram-container bg-darker p-3 rounded-3">
+                            <div class="mermaid">
+                            {subsection.diagram}
+                        </div>
+                        </div>
+                    </div>
+                ))}
+            </div>
+        ))}
+    </div>
+</section>
+
+<style>
+    .architecture-section {
+        scroll-margin-top: 2rem;
+    }
+
+    .bg-dark-subtle {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .bg-darker {
+        background: rgba(0, 0, 0, 0.2);
+    }
+
+    .diagram-container {
+        overflow-x: auto;
+    }
+
+    :global(.diagram-container svg) {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .content {
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+
+    .divider {
+        width: 60px;
+        height: 4px;
+        background: var(--accent);
+        margin: 0 auto;
+    }
+</style>
+
+<script>
+    import mermaid from 'mermaid';
+    
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: 'dark',
+        themeVariables: {
+            primaryColor: '#50fa7b',
+            primaryTextColor: '#f8f8f2',
+            primaryBorderColor: '#50fa7b',
+            lineColor: '#f8f8f2',
+            secondaryColor: '#44475a',
+            tertiaryColor: '#282a36'
+        }
+    });
+</script>

@@ -81,6 +81,7 @@ const experiences = [
         left: 50%;
         transform: translateX(-50%);
         opacity: 0.3;
+        z-index: -1;
     }
     
     .timeline-item {
@@ -91,8 +92,18 @@ const experiences = [
     .timeline-content {
         background: rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(255, 255, 255, 0.1);
-        margin-left: 2rem;
+        width: calc(50% - 2rem);
         position: relative;
+        z-index: 2;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content {
+        margin-left: auto;
+        margin-right: 2rem;
+    }
+
+    .timeline-item:nth-child(even) .timeline-content {
+        margin-left: 2rem;
     }
     
     .timeline-content::before {
@@ -102,8 +113,16 @@ const experiences = [
         height: 20px;
         background: var(--accent);
         border-radius: 50%;
-        left: -2.5rem;
         top: 1rem;
+        z-index: 1;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-content::before {
+        right: -2.5rem;
+    }
+
+    .timeline-item:nth-child(even) .timeline-content::before {
+        left: -2.5rem;
     }
     
     .bg-accent {
